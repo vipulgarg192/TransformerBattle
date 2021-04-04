@@ -1,6 +1,7 @@
 package com.app.transformerbattle.network.model
 
 import com.app.transformerbattle.domain.model.Transformer
+import com.app.transformerbattle.domain.model.TransformerList
 import com.app.transformerbattle.domain.util.DomainMapper
 
 class TransformerDtoMapper : DomainMapper<TransformerDto, Transformer> {
@@ -19,6 +20,12 @@ class TransformerDtoMapper : DomainMapper<TransformerDto, Transformer> {
             courage = model.courage,
             team = model.team,
             team_icon = model.team_icon
+        )
+    }
+
+    fun mapToDomainModel(model: TransformerListDto): TransformerList {
+        return TransformerList(
+            transformerList = model.transformer as List<Transformer>
         )
     }
 

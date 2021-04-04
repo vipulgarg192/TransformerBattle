@@ -15,8 +15,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:defaultNavHost="true"
+        tools:ignore="FragmentTagUsage,MissingConstraints"
         app:navGraph="@navigation/home_nav_graph"
-        tools:layout="@layout/fragment_create_transformer" />
+        tools:layout="@layout/fragment_transformer_list" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.transformerbattle.domain.model.Transformer
+import com.app.transformerbattle.domain.model.TransformerList
+import com.app.transformerbattle.network.model.TransformerListDto
 import com.app.transformerbattle.presenter.utils.TransformerEvents
 import com.app.transformerbattle.repository.AppRepository
 import com.app.transformerbattle.repository.AppSharedPrefs
@@ -22,15 +24,16 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
     val loading : LiveData<Boolean>
         get() = _loading
 
+    private var _transformerList = MutableLiveData<TransformerListDto>()
+    var transformerList: LiveData<TransformerListDto> = _transformerList
+
     fun onTriggerEvent(event: TransformerEvents){
         viewModelScope.launch {
             try {
                 when(event){
-                    is TransformerEvents.CreateTransformer -> {
-                        Log.e("TAG", "createTransformer: "+appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref) )
+                    is TransformerEvents.CreateTransformer -> createTransformer(event.transformer)  // this will create transformer
+                    is TransformerEvents.GetTransformer -> getTransformer()
 
-                        createTransformer(event.transformer)
-                    }
                 }
             }catch (e: Exception){
                 Log.e("TAG", "launchJob: Exception: ${e}, ${e.cause}")
@@ -39,16 +42,25 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
         }
     }
 
+    private suspend fun getTransformer() {
+        _loading.postValue(true)
+        val transformerList = appRepository.getTransformerList(
+            token =  "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}"
+        )
+        Log.e("TAG", "getTransformer: ${transformerList} ")
+
+        _transformerList.postValue(transformerList)
+        _loading.postValue(false)
+    }
+
     private suspend fun createTransformer(transformer: Transformer) {
-        _loading.value = true
-        Log.e("TAG", "createTransformer: "+appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref) )
+        _loading.postValue(true)
         val result = appRepository.createTransformerAppRepo(
             token =  "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}",
             contentType = "application/json",
             body = transformer
         )
-        Log.e("TAG", "createTransformer: "+result )
-
-        _loading.value = false
+        _loading.postValue(false)
     }
 }
+

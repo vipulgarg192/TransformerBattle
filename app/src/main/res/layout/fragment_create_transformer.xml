@@ -162,14 +162,14 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_skill" >
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioAutoBots"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/autobots" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioDecepticons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/decepticons" />

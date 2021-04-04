@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/home_nav_graph"
-    app:startDestination="@id/create_transformer">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/transformerListFragment">
 
     <fragment
         android:id="@+id/create_transformer"
         android:name="com.app.transformerbattle.presenter.ui.CreateTransformerFragment"
         android:label="CreateTransformer" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/transformerListFragment"
+        android:name="com.app.transformerbattle.presenter.ui.TransformerListFragment"
+        android:label="fragment_transformer_list"
+        tools:layout="@layout/fragment_transformer_list">
+
+        <action
+            android:id="@+id/action_transformerListFragment_to_create_transformer"
+            app:destination="@id/create_transformer" />
+
     </fragment>
 
 

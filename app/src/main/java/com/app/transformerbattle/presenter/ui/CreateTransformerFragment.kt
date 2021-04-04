@@ -17,6 +17,7 @@ class CreateTransformerFragment: Fragment() {
 
     private lateinit var binding: FragmentCreateTransformerBinding
     private val mainViewModel: MainViewModel by activityViewModels()
+    private lateinit var mTeam : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +50,17 @@ class CreateTransformerFragment: Fragment() {
     }
 
     private fun bindTransformer(): Transformer {
+        mTeam = if (binding.radioAutoBots.isChecked){
+            "A"
+        }else{
+            "D"
+        }
+
         return Transformer(id = null,name = binding.editName.text.toString(),
       strength = binding.editStrength.text.toString().toInt(),intelligence = binding.editIntelligence.text.toString().toInt(),
       speed = binding.editSpeed.text.toString().toInt(),endurance= binding.editEndurance.text.toString().toInt(),
      rank = binding.editRank.text.toString().toInt(), firepower = binding.editFirepower.text.toString().toInt(),
       skill = binding.editSkill.text.toString().toInt(), courage = binding.editCourage.text.toString().toInt(),
-          team = binding.editTeam.text.toString(),team_icon = null)
+          team = mTeam,team_icon = null)
     }
 }

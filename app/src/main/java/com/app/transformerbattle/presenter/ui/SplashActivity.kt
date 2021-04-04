@@ -4,9 +4,11 @@ package com.app.transformerbattle.presenter.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.activity.viewModels
+import com.app.transformerbattle.R
 import com.app.transformerbattle.databinding.ActivitySplashBinding
 import com.app.transformerbattle.repository.AppSharedPrefs
 import com.app.transformerbattle.utils.Status
@@ -35,6 +37,7 @@ class SplashActivity:  AppCompatActivity() {
         if (!preference.getStoredTag(AppSharedPrefs.tokenPref).isNullOrEmpty()){
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }else{
             viewModel.Token.observe(this, ::handleLiveData)
         }

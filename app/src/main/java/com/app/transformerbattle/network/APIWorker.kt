@@ -23,6 +23,15 @@ object APIWorker {
                    .connectTimeout(15,TimeUnit.SECONDS)
                    .readTimeout(20,TimeUnit.SECONDS)
                    .addInterceptor(interceptor)
+
+               httpBuilder.addInterceptor { chain ->
+                   val newRequest = chain.request().newBuilder()
+                       .addHeader(
+                           "Content-Type", "application/json"
+                       )
+                       .build()
+                   chain.proceed(newRequest)
+               }
                mClient = httpBuilder.build()
            }
             return mClient!!
