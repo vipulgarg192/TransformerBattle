@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_10sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp">
+
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/create_transformer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:textStyle="bold"
+        android:textSize="@dimen/_16sdp"
+        android:imeOptions="actionNext"
+        app:layout_constraintTop_toBottomOf="@id/txt_title"
+        android:hint="@string/name" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_strength"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/strength"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:maxLength="1"
+        android:text="7"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/edit_name"/>
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_intelligence"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:inputType="number"
+        android:text="7"
+        android:maxLength="1"
+        app:layout_constraintTop_toBottomOf="@id/edit_strength"
+        android:hint="@string/intelligence"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_speed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/strength"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:maxLength="1"
+        android:inputType="number"
+        android:text="7"
+        app:layout_constraintTop_toBottomOf="@id/edit_intelligence"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_endurance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/endurance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:maxLength="1"
+        android:inputType="number"
+        android:text="7"
+        app:layout_constraintTop_toBottomOf="@id/edit_speed"/>
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_rank"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:maxLength="1"
+        android:inputType="number"
+        android:text="6"
+        app:layout_constraintTop_toBottomOf="@id/edit_endurance"
+        android:hint="@string/rank"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_courage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/courage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="number"
+        android:text="7"
+        android:maxLength="1"
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@id/edit_rank"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_firepower"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:inputType="number"
+        android:text="7"
+        android:maxLength="1"
+        app:layout_constraintTop_toBottomOf="@id/edit_courage"
+        android:hint="@string/firepower"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_skill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:inputType="number"
+        android:text="6"
+        android:maxLength="1"
+        app:layout_constraintTop_toBottomOf="@id/edit_firepower"
+        android:hint="@string/skill"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_submit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radiogroup"/>
+
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_skill" >
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/autobots" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/decepticons" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

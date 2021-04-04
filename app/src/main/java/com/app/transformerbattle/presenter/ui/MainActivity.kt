@@ -1,8 +1,11 @@
-package com.app.transformerbattle
+package com.app.transformerbattle.presenter.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.app.transformerbattle.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
