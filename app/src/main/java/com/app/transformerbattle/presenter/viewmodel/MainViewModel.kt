@@ -32,6 +32,11 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
     private var _transformerList = MutableLiveData<Status<TransformerListDto>>()
     var transformerList: LiveData<Status<TransformerListDto>> = _transformerList
 
+    fun resetModel() {
+        _result.value = Status.DoNothing
+        _battleResult.value = Status.DoNothing
+        _transformerList.value = Status.DoNothing
+    }
 
     fun onTriggerEvent(event: TransformerEvents){
         viewModelScope.launch {

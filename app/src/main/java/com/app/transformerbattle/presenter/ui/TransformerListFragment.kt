@@ -1,7 +1,6 @@
 package com.app.transformerbattle.presenter.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.transformerbattle.R
@@ -27,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TransformerListFragment: Fragment(), ItemClickEventHandler {
 
-    private lateinit var binding: FragmentTransformerListBinding
+    private  lateinit var binding: FragmentTransformerListBinding
     private lateinit var mTransformerListAdapter: TransformerListAdapter
     private  var mTransformerList: List<TransformerDto> = ArrayList()
     private val viewModel: MainViewModel by activityViewModels()
@@ -47,7 +45,6 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("TAG", "onViewCreated: " )
         bindAdapter()
         subscribeViewModel()
         clickEvents()
@@ -98,6 +95,7 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
     }
 
     private fun clickEvents() {
+
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_transformerListFragment_to_create_transformer).apply { }
         }
@@ -105,15 +103,10 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
         binding.battleFab.setOnClickListener {
             findNavController().navigate(R.id.action_transformerListFragment_to_battleFragment).apply { }
         }
-
-
     }
 
     override fun itemClick(position: Int) {
-        Log.e("TAG", "itemClick: " )
-
-        val transformer = mTransformerList?.get(position)
-
+        val transformer = mTransformerList.get(position)
         val bundle = bundleOf(
                 Pair("id", transformer?.id.toString()),
                 Pair("team", transformer?.team.toString()),

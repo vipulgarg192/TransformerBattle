@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presenter.ui.MainActivity">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
@@ -20,6 +20,5 @@
         app:navGraph="@navigation/home_nav_graph"
         tools:ignore="FragmentTagUsage,MissingConstraints"
         tools:layout="@layout/fragment_transformer_list" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

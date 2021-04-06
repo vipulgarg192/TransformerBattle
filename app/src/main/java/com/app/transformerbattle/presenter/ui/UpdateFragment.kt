@@ -27,12 +27,11 @@ class UpdateFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentUpdateTransformerBinding.inflate(layoutInflater)
-        return binding.root
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         bindData()
         subscribeViewModel()
         clickEvents()
@@ -73,6 +72,7 @@ class UpdateFragment: Fragment() {
 
     private fun handleSuccess() {
         binding.progressbar.visibility = View.GONE
+        viewModel.resetModel()
         findNavController().navigateUp()
     }
 

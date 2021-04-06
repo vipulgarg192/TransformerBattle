@@ -65,6 +65,7 @@ class CreateTransformerFragment: Fragment() {
 
     private fun handleSuccess() {
         binding.progressbar.visibility = View.GONE
+        mainViewModel.resetModel()
         findNavController().navigateUp()
     }
 

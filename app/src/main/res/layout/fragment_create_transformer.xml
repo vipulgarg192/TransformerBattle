@@ -70,6 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:maxLines="1"
         android:maxLength="1"
+        android:text="5"
         android:inputType="number"
         app:layout_constraintTop_toBottomOf="@id/spinner_name"/>
 
@@ -83,6 +84,7 @@
         android:maxLines="1"
         android:inputType="number"
         android:maxLength="1"
+        android:text="5"
         app:layout_constraintTop_toBottomOf="@id/edit_strength"
         android:hint="@string/intelligence"/>
 
@@ -96,6 +98,7 @@
         android:maxLines="1"
         android:maxLength="1"
         android:inputType="number"
+        android:text="5"
         app:layout_constraintTop_toBottomOf="@id/edit_intelligence"/>
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -108,6 +111,7 @@
         android:maxLines="1"
         android:maxLength="1"
         android:inputType="number"
+        android:text="5"
         app:layout_constraintTop_toBottomOf="@id/edit_speed"/>
 
 
@@ -120,6 +124,7 @@
         android:maxLines="1"
         android:maxLength="1"
         android:inputType="number"
+        android:text="5"
         app:layout_constraintTop_toBottomOf="@id/edit_endurance"
         android:hint="@string/rank"/>
 
@@ -132,6 +137,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:inputType="number"
         android:maxLength="1"
+        android:text="5"
         android:maxLines="1"
         app:layout_constraintTop_toBottomOf="@id/edit_rank"/>
 
@@ -144,6 +150,7 @@
         android:maxLines="1"
         android:inputType="number"
         android:maxLength="1"
+        android:text="5"
         app:layout_constraintTop_toBottomOf="@id/edit_courage"
         android:hint="@string/firepower"/>
 
@@ -156,6 +163,7 @@
         android:maxLines="1"
         android:inputType="number"
         android:maxLength="1"
+        android:text="5"
         app:layout_constraintTop_toBottomOf="@id/edit_firepower"
         android:hint="@string/skill"/>
 
