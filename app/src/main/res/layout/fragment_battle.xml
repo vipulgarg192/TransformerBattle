@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_8sdp">
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/battle_ground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/_16sdp"/>
+
+    <TextView
+        android:id="@+id/text_autobots"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/autobots"
+        android:layout_marginTop="@dimen/_4sdp"
+        app:layout_constraintTop_toBottomOf="@id/text_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/_16sdp"/>
+
+
+    <Spinner
+        android:id="@+id/spinner_autobots"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:textStyle="bold"
+        android:textSize="@dimen/_16sdp"
+        android:padding="@dimen/_4sdp"
+        android:imeOptions="actionNext"
+        app:layout_constraintTop_toBottomOf="@id/text_autobots"
+        android:hint="@string/name" />
+
+    <TextView
+        android:id="@+id/text_decepticons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/decepticons"
+        app:layout_constraintTop_toBottomOf="@id/spinner_autobots"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_4sdp"/>
+
+    <Spinner
+        android:id="@+id/spinner_decepticon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:textStyle="bold"
+        android:textSize="@dimen/_16sdp"
+        android:imeOptions="actionNext"
+        android:padding="@dimen/_4sdp"
+        app:layout_constraintTop_toBottomOf="@id/text_decepticons"
+        android:hint="@string/name" />
+
+    <Button
+        android:id="@+id/btn_battle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/submit"
+        app:layout_constraintTop_toBottomOf="@id/spinner_decepticon"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@id/btn_battle"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

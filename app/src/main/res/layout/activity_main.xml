@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/offwhite"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presenter.ui.MainActivity">
 
@@ -11,12 +12,13 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:defaultNavHost="true"
-        tools:ignore="FragmentTagUsage,MissingConstraints"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/home_nav_graph"
+        tools:ignore="FragmentTagUsage,MissingConstraints"
         tools:layout="@layout/fragment_transformer_list" />
 
 

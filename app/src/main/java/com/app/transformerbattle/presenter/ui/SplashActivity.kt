@@ -4,16 +4,13 @@ package com.app.transformerbattle.presenter.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import dagger.hilt.android.AndroidEntryPoint
 import androidx.activity.viewModels
-import com.app.transformerbattle.R
+import androidx.appcompat.app.AppCompatActivity
 import com.app.transformerbattle.databinding.ActivitySplashBinding
 import com.app.transformerbattle.repository.AppSharedPrefs
 import com.app.transformerbattle.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlin.math.log
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -35,27 +32,26 @@ class SplashActivity:  AppCompatActivity() {
 
     private fun subscribeObservers(){
         if (!preference.getStoredTag(AppSharedPrefs.tokenPref).isNullOrEmpty()){
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            openMainActivity()
         }else{
-            viewModel.Token.observe(this, ::handleLiveData)
+            viewModel.Token.observe(this@SplashActivity, ::handleLiveData)
         }
     }
 
     private fun handleLiveData(status: Status<String>?) {
         when(status){
             is Status.Success<String> -> setPreference(status.data)
-//            is Status.Error -> Toast.makeText(this,"Something went wrong",Toast.LENGTH_LONG).show()
         }
     }
 
     private fun setPreference(data: String) {
-        Log.e("TAG", "data: ${data}")
-
         preference.setStoredTag(AppSharedPrefs.tokenPref,data)
+        openMainActivity()
+    }
 
+    private fun openMainActivity(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }

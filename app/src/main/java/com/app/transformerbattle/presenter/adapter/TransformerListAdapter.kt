@@ -1,10 +1,10 @@
 package com.app.transformerbattle.presenter.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.app.transformerbattle.R
 import com.app.transformerbattle.databinding.ItemHomeFragmentBinding
 import com.app.transformerbattle.network.model.TransformerDto
 import com.app.transformerbattle.utils.ItemClickEventHandler

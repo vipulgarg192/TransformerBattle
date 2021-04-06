@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TransformerBattle</string>
     <string name="name">Name</string>
@@ -17,6 +18,11 @@
     <string name="update">Update</string>
     <string name="submit">Submit</string>
     <string name="create_transformer">Create Transformer</string>
+    <string name="transformer">Transformer</string>
+
+    <string name="select_team">Select Team</string>
+
+    <string name="battle_ground">Battle Ground</string>
 
     <string-array name="team_game">
         <item>Team A</item>
@@ -24,7 +30,6 @@
         <item>Team C</item>
         <item>Team D</item>
     </string-array>
-
 
     <string-array name="number">
         <item>1</item>
@@ -39,7 +44,16 @@
         <item>10</item>
     </string-array>
 
-    <string-array name="decepticons">
+    <string-array name="transformer_list">
+        <item>Optimus Prime</item>
+        <item>Prowl</item>
+        <item>Ratchet</item>
+        <item>Blaster</item>
+        <item>Bumblebee</item>
+        <item>Cliffjumper</item>
+        <item>Grimlock</item>
+        <item>Grimlock</item>
+        <item>Ironhide</item>
         <item>Megatron</item>
         <item>Starscream</item>
         <item>Barricade</item>
@@ -48,18 +62,17 @@
         <item>Blackout</item>
         <item>Scorponok</item>
         <item>Dispensor</item>
+        <item>Battletrap</item>
+        <item>Blitzwing</item>
+        <item>Bombshell</item>
+        <item>Bruticus</item>
     </string-array>
 
-    <string-array name="autobots">
-        <item>Optimus Prime</item>
-        <item>Prowl</item>
-        <item>Ratchet</item>
-        <item>Blaster</item>
-        <item>Bumblebee</item>
-        <item>Cliffjumper</item>
-        <item>Grimlock</item>
-        <item>Ironhide</item>
+    <string-array name="transformers">
+        <item>Autobots</item>
+        <item>Decepticons</item>
     </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

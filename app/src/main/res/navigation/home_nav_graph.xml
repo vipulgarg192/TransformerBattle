@@ -9,6 +9,9 @@
         android:id="@+id/create_transformer"
         android:name="com.app.transformerbattle.presenter.ui.CreateTransformerFragment"
         android:label="CreateTransformer" >
+        <action
+            android:id="@+id/action_create_transformer_to_transformerListFragment"
+            app:destination="@id/transformerListFragment" />
     </fragment>
 
     <fragment
@@ -19,9 +22,20 @@
 
         <action
             android:id="@+id/action_transformerListFragment_to_create_transformer"
-            app:destination="@id/create_transformer" />
+            app:destination="@id/create_transformer"
+            app:popUpTo="@id/create_transformer"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_transformerListFragment_to_battleFragment"
+            app:destination="@id/battleFragment"
+            app:popUpTo="@id/create_transformer"
+            app:popUpToInclusive="true"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/battleFragment"
+        android:name="com.app.transformerbattle.presenter.ui.BattleFragment"
+        android:label="BattleFragment" />
 
 
 </navigation>

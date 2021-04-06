@@ -73,11 +73,27 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
             mTransformerListAdapter.setData(mTransformerList)
             binding.rvTransformerList.visibility = View.VISIBLE
         })
+
+        viewModel.transformerList.observe(viewLifecycleOwner, Observer {
+         val a =   it.transformer?.filter {
+                it.team.contains("A")
+            }
+            val b = it.transformer?.filter {
+                it.team.contains("D")
+            }
+            if (a!= null && b !=null){
+                binding.battleFab.visibility = View.VISIBLE
+            }
+        })
     }
 
     private fun clickEvents() {
         binding.fab.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_transformerListFragment_to_create_transformer).apply { }
+        }
+
+        binding.battleFab.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_transformerListFragment_to_battleFragment).apply { }
         }
     }
 
