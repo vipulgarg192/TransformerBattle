@@ -1,9 +1,11 @@
 package com.app.transformerbattle.presenter.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.transformerbattle.presenter.utils.TransformerEvents
 import com.app.transformerbattle.repository.Repository
 import com.app.transformerbattle.utils.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,25 +22,29 @@ constructor(private val mainRepository: Repository):  ViewModel() {
     val Token: LiveData<Status<String>>
         get() = _Token
 
-    fun setStateEvent(splashStateEvent: SplashStateEvent) {
+    fun onTriggerEvent(event: TransformerEvents){
         viewModelScope.launch {
-            when (splashStateEvent) {
-                is SplashStateEvent.GetToken -> {
-                        mainRepository.getToken()
-                            .onEach { splashState ->
-                                _Token.postValue(splashState)
-                            }
-                            .launchIn(viewModelScope)
+            try {
+                when(event){
+                    is TransformerEvents.GetToken -> handleSuccess()
                 }
+            }catch (e: Exception){
+                Log.e("TAG", "launchJob: Exception: ${e}, ${e.cause}")
+                e.printStackTrace()
             }
         }
+    }
+
+    private suspend fun handleSuccess() {
+
+        mainRepository.getToken()
+                .onEach { event ->
+                    _Token.postValue(event)
+                }
+                .launchIn(viewModelScope)
     }
 
     override fun onCleared() {
         super.onCleared()
     }
-}
-sealed class SplashStateEvent{
-    object GetToken: SplashStateEvent()
-    object MoveActivity: SplashStateEvent()
 }

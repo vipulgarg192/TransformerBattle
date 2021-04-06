@@ -11,11 +11,9 @@ sealed class TransformerEvents {
 
     object GetTransformer : TransformerEvents()
 
+    object GetToken : TransformerEvents()
+
     data class CreateTransformer(val transformer: Transformer) : TransformerEvents()
-
-    object GetAutobotsTransformer : TransformerEvents()
-
-    object GetDecepticonsTransformer : TransformerEvents()
 
     data class LetBattleTransformer(val autobots: TransformerDto, val decepticons: TransformerDto) : TransformerEvents()
 }

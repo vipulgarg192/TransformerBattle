@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.app.transformerbattle.databinding.ActivitySplashBinding
+import com.app.transformerbattle.presenter.utils.TransformerEvents
 import com.app.transformerbattle.repository.AppSharedPrefs
 import com.app.transformerbattle.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +28,7 @@ class SplashActivity:  AppCompatActivity() {
         setContentView(binding.root)
         preference = AppSharedPrefs(this)
         subscribeObservers()
-        viewModel.setStateEvent(SplashStateEvent.GetToken)
+        viewModel.onTriggerEvent(TransformerEvents.GetToken)
     }
 
     private fun subscribeObservers(){

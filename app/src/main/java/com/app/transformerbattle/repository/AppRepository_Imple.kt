@@ -4,6 +4,7 @@ import com.app.transformerbattle.domain.abstraction.AppRepository
 import com.app.transformerbattle.domain.model.Transformer
 import com.app.transformerbattle.network.ApiService
 import com.app.transformerbattle.network.model.TransformerListDto
+import retrofit2.Response
 import javax.inject.Inject
 
 class AppRepository_Imple @Inject constructor(private val apiService: ApiService) : AppRepository {
@@ -24,7 +25,7 @@ class AppRepository_Imple @Inject constructor(private val apiService: ApiService
         return apiService.updateTransformer(token,body)
     }
 
-    override suspend fun deleteTransformerAppRepo(token: String,  id: String) {
+    override suspend fun deleteTransformerAppRepo(token: String,  id: String): Response<Void> {
         return apiService.deleteTransformer(token,id)
     }
 

@@ -19,10 +19,6 @@ import javax.inject.Inject
 class MainViewModel @Inject
 constructor(private val appRepository: AppRepository, private val appSharedPrefs: AppSharedPrefs): ViewModel() {
 
-    private var _loading : MutableLiveData<Boolean> = MutableLiveData()
-    val loading : LiveData<Boolean>
-        get() = _loading
-
     private var _result: MutableLiveData<Status<Any>> = MutableLiveData()
 
     val result: LiveData<Status<Any>>
@@ -179,41 +175,43 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
                     token =  "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}"
             )
             _transformerList.postValue(Status.Success(transformerList))
-        }catch (ioe: IOException) {
-            _transformerList.postValue(Status.Error(ioe))
-        } catch (he: HttpException) {
-            _transformerList.postValue(Status.Error(he))
+        }catch (ex: Exception){
+            _result.postValue(Status.Error(ex))
         }
     }
 
     private suspend fun createTransformer(transformer: Transformer) {
-        _result.postValue(Status.Loading)
-        val result = appRepository.createTransformerAppRepo(
-            token =  "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}",
-            body = transformer
-        )
-        _result.postValue(Status.Success(result))
+        try {
+            _result.postValue(Status.Loading)
+            val result = appRepository.createTransformerAppRepo(
+                    token =  "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}",
+                    body = transformer
+            )
+            _result.postValue(Status.Success(result))
+        }catch (e: Exception) {
+            _result.postValue(Status.Error(e))
+        }
+
     }
 
     private suspend fun updateTransformer(transformer: Transformer) {
-        Log.e("TAG", "updateTransformer: ${transformer.id}")
-        _result.postValue(Status.Loading)
         try {
-             appRepository.deleteTransformerAppRepo(
-                    token = "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}",
-                    id = transformer.id.toString()
-            )
-
+            _result.postValue(Status.Loading)
             val result = appRepository.createTransformerAppRepo(
                     token = "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}",
                     body = transformer
             )
-
             _result.postValue(Status.Success(result))
+            appRepository.deleteTransformerAppRepo(
+                    token = "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}",
+                    id = transformer.id.toString()
+            )
         } catch (ioe: IOException) {
             _result.postValue(Status.Error(ioe))
         } catch (he: HttpException) {
             _result.postValue(Status.Error(he))
+        }catch (ex: Exception){
+            _result.postValue(Status.Error(ex))
         }
     }
 }

@@ -65,7 +65,7 @@ class CreateTransformerFragment: Fragment() {
 
     private fun handleSuccess() {
         binding.progressbar.visibility = View.GONE
-        findNavController().popBackStack()
+        findNavController().navigateUp()
     }
 
     private fun bindSpinners() {

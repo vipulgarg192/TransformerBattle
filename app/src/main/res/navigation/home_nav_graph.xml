@@ -11,7 +11,9 @@
         android:label="CreateTransformer" >
         <action
             android:id="@+id/action_create_transformer_to_transformerListFragment"
-            app:destination="@id/transformerListFragment" />
+            app:destination="@id/transformerListFragment"
+            app:popUpTo="@+id/transformerListFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -22,29 +24,31 @@
 
         <action
             android:id="@+id/action_transformerListFragment_to_create_transformer"
-            app:destination="@id/create_transformer"
-            app:popUpTo="@id/create_transformer"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/create_transformer" />
         <action
             android:id="@+id/action_transformerListFragment_to_battleFragment"
-            app:destination="@id/battleFragment"
-            app:popUpTo="@id/create_transformer"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/battleFragment" />
         <action
             android:id="@+id/action_transformerListFragment_to_updateFragment"
-            app:destination="@id/updateFragment"
-            app:popUpTo="@id/create_transformer"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/updateFragment" />
 
     </fragment>
+
     <fragment
         android:id="@+id/battleFragment"
         android:name="com.app.transformerbattle.presenter.ui.BattleFragment"
         android:label="BattleFragment" />
+
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.app.transformerbattle.presenter.ui.UpdateFragment"
-        android:label="UpdateFragment" />
+        android:label="UpdateFragment" >
+        <action
+            android:id="@+id/action_updateFragment_to_transformerListFragment"
+            app:destination="@id/transformerListFragment"
+            app:popUpTo="@+id/transformerListFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 
 
 </navigation>

@@ -1,6 +1,7 @@
 package com.app.transformerbattle.presenter.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.transformerbattle.R
 import com.app.transformerbattle.databinding.FragmentTransformerListBinding
@@ -45,7 +47,7 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.e("TAG", "onViewCreated: " )
         bindAdapter()
         subscribeViewModel()
         clickEvents()
@@ -62,14 +64,6 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
     private fun subscribeViewModel() {
 
         viewModel.onTriggerEvent(TransformerEvents.GetTransformer)
-
-        viewModel.loading.observe(viewLifecycleOwner, Observer { isLoading->
-           if (isLoading){
-               binding.progressbar.visibility = View.VISIBLE
-           }else {
-               binding.progressbar.visibility = View.GONE
-           }
-        })
 
         viewModel.transformerList.observe(viewLifecycleOwner, Observer { status->
             when(status){
@@ -98,25 +92,27 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
         val b = data.transformer?.filter {
             it.team.contains("D")
         }
-        if (a!= null && b !=null){
+        if (a?.size != 0 && b?.size !=0){
             binding.battleFab.visibility = View.VISIBLE
         }
     }
 
     private fun clickEvents() {
         binding.fab.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_transformerListFragment_to_create_transformer).apply { }
+            findNavController().navigate(R.id.action_transformerListFragment_to_create_transformer).apply { }
         }
 
         binding.battleFab.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_transformerListFragment_to_battleFragment).apply { }
+            findNavController().navigate(R.id.action_transformerListFragment_to_battleFragment).apply { }
         }
 
 
     }
 
     override fun itemClick(position: Int) {
-       val transformer = mTransformerList?.get(position)
+        Log.e("TAG", "itemClick: " )
+
+        val transformer = mTransformerList?.get(position)
 
         val bundle = bundleOf(
                 Pair("id", transformer?.id.toString()),
@@ -132,9 +128,7 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
                 Pair("speed", transformer?.speed.toString()),
                 Pair("teamicon", transformer?.team_icon.toString())
         )
-
-        Navigation.findNavController(binding.root).navigate(R.id.action_transformerListFragment_to_updateFragment,bundle)
-
+        findNavController().navigate(R.id.action_transformerListFragment_to_updateFragment,bundle)
     }
 
 

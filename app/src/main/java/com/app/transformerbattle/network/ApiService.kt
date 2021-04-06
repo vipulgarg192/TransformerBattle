@@ -2,6 +2,7 @@ package com.app.transformerbattle.network
 
 import com.app.transformerbattle.domain.model.Transformer
 import com.app.transformerbattle.network.model.TransformerListDto
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
@@ -30,6 +31,6 @@ interface ApiService {
     suspend fun deleteTransformer(
             @Header("Authorization") token: String,
             @Path("transformerid") value : String
-    )
+    ): Response<Void>
 
 }
