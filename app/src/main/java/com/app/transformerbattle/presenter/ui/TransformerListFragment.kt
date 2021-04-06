@@ -58,6 +58,7 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
         binding.rvTransformerList.adapter = mTransformerListAdapter
     }
 
+    //region $Subscribing Shared View Model
     private fun subscribeViewModel() {
 
         viewModel.onTriggerEvent(TransformerEvents.GetTransformer)
@@ -70,13 +71,16 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
             }
         })
     }
+    // endregion
 
+    //region $handleError
     private fun handleError(exception: Exception) {
         binding.progressbar.visibility = View.GONE
         Toast.makeText(requireContext(),exception.message,Toast.LENGTH_LONG).show()
     }
+    // endregion
 
-
+    //region $Set Adapter and Show battle floating icon when list contains both autobots and decepticons
     private fun setAdapter(data: TransformerListDto) {
         binding.progressbar.visibility = View.GONE
         mTransformerList = data.transformer!!
@@ -93,16 +97,20 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
             binding.battleFab.visibility = View.VISIBLE
         }
     }
+    // endregion
 
     private fun clickEvents() {
-
+        //region $click for creating transformers
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_transformerListFragment_to_create_transformer).apply { }
         }
+        //endregion
 
+        //region $click for battle
         binding.battleFab.setOnClickListener {
             findNavController().navigate(R.id.action_transformerListFragment_to_battleFragment).apply { }
         }
+        //endregion
     }
 
     override fun itemClick(position: Int) {

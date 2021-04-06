@@ -38,6 +38,7 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
         _transformerList.value = Status.DoNothing
     }
 
+    //region $handle events from fragments
     fun onTriggerEvent(event: TransformerEvents){
         viewModelScope.launch {
             try {
@@ -54,11 +55,14 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
             }
         }
     }
+    //endregion
+
 
     private fun getBattleResult(autobots: TransformerDto, decepticons: TransformerDto) {
         battle(autobots,decepticons)
     }
 
+    //region $battle function
     private fun battle(autobots: TransformerDto, decepticons: TransformerDto){
 
         if (autobots.name.equals(decepticons.name)){
@@ -115,7 +119,9 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
         }
 
     }
+    // endregion
 
+    //region $WinnerByOverallRating
     private fun checkOverallRating(autobots: TransformerDto, decepticons: TransformerDto): TransformerDto? {
         val autobotTotalValue = autobots.rank + autobots.strength +
                 autobots.courage + autobots.endurance +
@@ -135,7 +141,9 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
             null
         }
     }
+    // endregion
 
+    //region $WinnerbySkill
     private fun checkSkillIsBiggerby3(autobots: TransformerDto, decepticons: TransformerDto): TransformerDto? {
         return if ((autobots.skill - decepticons.skill >= 3) || (decepticons.skill - autobots.skill >= 3)) {
             if (autobots.skill > decepticons.skill) {
@@ -147,7 +155,9 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
             null
         }
     }
+    // endregion
 
+    //region $WinnerByStrength
     private fun checkStrengthIsBiggerby3(autobots: TransformerDto, decepticons: TransformerDto): TransformerDto? {
         return if ((autobots.strength - decepticons.strength >= 3) || (decepticons.strength - autobots.strength >= 3)) {
             if (autobots.strength > decepticons.strength) {
@@ -159,7 +169,9 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
             null
         }
     }
+    //endregion
 
+    // region $WinnerByCourage
     private fun checkCourageIsBiggerby4(autobots: TransformerDto, decepticons: TransformerDto) : TransformerDto? {
         return if ((autobots.courage - decepticons.courage >= 4) || (decepticons.courage - autobots.courage >= 4)) {
             if (autobots.courage > decepticons.courage) {
@@ -170,9 +182,10 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
         }else{
             null
         }
-    }
+    }// endregion
 
 
+    // region $GetTransformer
     private suspend fun getTransformer() {
         try {
             _transformerList.postValue(Status.Loading)
@@ -183,8 +196,9 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
         }catch (ex: Exception){
             _result.postValue(Status.Error(ex))
         }
-    }
+    }// endregion
 
+    // region $CreateTransformer
     private suspend fun createTransformer(transformer: Transformer) {
         try {
             _result.postValue(Status.Loading)
@@ -196,9 +210,10 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
         }catch (e: Exception) {
             _result.postValue(Status.Error(e))
         }
-
     }
+    // endregion
 
+    // region $UpdateTransformer
     private suspend fun updateTransformer(transformer: Transformer) {
         try {
             _result.postValue(Status.Loading)
@@ -219,5 +234,6 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
             _result.postValue(Status.Error(ex))
         }
     }
+    //endregion
 }
 
