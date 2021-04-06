@@ -5,7 +5,9 @@ import com.app.transformerbattle.network.model.TransformerDto
 
 sealed class TransformerEvents {
 
-    object UpdateTransformer : TransformerEvents()
+    data class UpdateTransformer(val transformer: Transformer) : TransformerEvents()
+
+    object RefreshBattle : TransformerEvents()
 
     object GetTransformer : TransformerEvents()
 

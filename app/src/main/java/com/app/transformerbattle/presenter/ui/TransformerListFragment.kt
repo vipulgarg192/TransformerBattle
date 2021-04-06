@@ -1,10 +1,11 @@
 package com.app.transformerbattle.presenter.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -13,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.transformerbattle.R
 import com.app.transformerbattle.databinding.FragmentTransformerListBinding
 import com.app.transformerbattle.network.model.TransformerDto
+import com.app.transformerbattle.network.model.TransformerListDto
 import com.app.transformerbattle.presenter.adapter.TransformerListAdapter
 import com.app.transformerbattle.presenter.utils.TransformerEvents
 import com.app.transformerbattle.presenter.viewmodel.MainViewModel
 import com.app.transformerbattle.utils.ItemClickEventHandler
+import com.app.transformerbattle.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,23 +71,36 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
            }
         })
 
-        viewModel.transformerList.observe(viewLifecycleOwner, Observer {
-            mTransformerList = it.transformer!!
-            mTransformerListAdapter.setData(mTransformerList)
-            binding.rvTransformerList.visibility = View.VISIBLE
+        viewModel.transformerList.observe(viewLifecycleOwner, Observer { status->
+            when(status){
+                is Status.Error -> handleError(status.exception)
+                is Status.Success -> setAdapter(status.data)
+                Status.Loading ->  binding.progressbar.visibility = View.VISIBLE
+            }
         })
+    }
 
-        viewModel.transformerList.observe(viewLifecycleOwner, Observer {
-         val a =   it.transformer?.filter {
-                it.team.contains("A")
-            }
-            val b = it.transformer?.filter {
-                it.team.contains("D")
-            }
-            if (a!= null && b !=null){
-                binding.battleFab.visibility = View.VISIBLE
-            }
-        })
+    private fun handleError(exception: Exception) {
+        binding.progressbar.visibility = View.GONE
+        Toast.makeText(requireContext(),exception.message,Toast.LENGTH_LONG).show()
+    }
+
+
+    private fun setAdapter(data: TransformerListDto) {
+        binding.progressbar.visibility = View.GONE
+        mTransformerList = data.transformer!!
+        mTransformerListAdapter.setData(mTransformerList)
+        binding.rvTransformerList.visibility = View.VISIBLE
+
+        val a =   data.transformer?.filter {
+            it.team.contains("A")
+        }
+        val b = data.transformer?.filter {
+            it.team.contains("D")
+        }
+        if (a!= null && b !=null){
+            binding.battleFab.visibility = View.VISIBLE
+        }
     }
 
     private fun clickEvents() {
@@ -95,10 +111,30 @@ class TransformerListFragment: Fragment(), ItemClickEventHandler {
         binding.battleFab.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_transformerListFragment_to_battleFragment).apply { }
         }
+
+
     }
 
     override fun itemClick(position: Int) {
-        Log.e("TAG", "launchJob: Exception: ")
+       val transformer = mTransformerList?.get(position)
+
+        val bundle = bundleOf(
+                Pair("id", transformer?.id.toString()),
+                Pair("team", transformer?.team.toString()),
+                Pair("name", transformer?.name.toString()),
+                Pair("skill", transformer?.skill.toString()),
+                Pair("strength", transformer?.strength.toString()),
+                Pair("courage", transformer?.courage.toString()),
+                Pair("rank", transformer?.rank.toString()),
+                Pair("intelligence", transformer?.intelligence.toString()),
+                Pair("firepower", transformer?.firepower.toString()),
+                Pair("endurance", transformer?.endurance.toString()),
+                Pair("speed", transformer?.speed.toString()),
+                Pair("teamicon", transformer?.team_icon.toString())
+        )
+
+        Navigation.findNavController(binding.root).navigate(R.id.action_transformerListFragment_to_updateFragment,bundle)
+
     }
 
 

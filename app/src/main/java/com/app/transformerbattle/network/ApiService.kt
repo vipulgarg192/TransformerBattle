@@ -1,8 +1,6 @@
 package com.app.transformerbattle.network
 
 import com.app.transformerbattle.domain.model.Transformer
-import com.app.transformerbattle.domain.model.TransformerList
-import com.app.transformerbattle.network.model.TransformerDto
 import com.app.transformerbattle.network.model.TransformerListDto
 import retrofit2.http.*
 
@@ -21,5 +19,17 @@ interface ApiService {
     suspend fun getTransformer(
         @Header("Authorization") token: String
     ): TransformerListDto
+
+    @PUT("transformers")
+    suspend fun updateTransformer(
+            @Header("Authorization") token: String,
+            @Body requestBody: Transformer
+    ): Transformer
+
+    @DELETE("transformers/{transformerid}")
+    suspend fun deleteTransformer(
+            @Header("Authorization") token: String,
+            @Path("transformerid") value : String
+    )
 
 }

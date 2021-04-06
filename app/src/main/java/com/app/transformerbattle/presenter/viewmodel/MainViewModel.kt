@@ -6,20 +6,19 @@ import com.app.transformerbattle.domain.model.Transformer
 import com.app.transformerbattle.network.model.TransformerDto
 import com.app.transformerbattle.network.model.TransformerListDto
 import com.app.transformerbattle.presenter.utils.TransformerEvents
-import com.app.transformerbattle.repository.AppRepository
+import com.app.transformerbattle.domain.abstraction.AppRepository
 import com.app.transformerbattle.repository.AppSharedPrefs
 import com.app.transformerbattle.utils.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject
 constructor(private val appRepository: AppRepository, private val appSharedPrefs: AppSharedPrefs): ViewModel() {
 
-    companion object{
-        private const val TAG = "MainViewModel"
-    }
     private var _loading : MutableLiveData<Boolean> = MutableLiveData()
     val loading : LiveData<Boolean>
         get() = _loading
@@ -30,18 +29,12 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
         get() = _result
 
     private var _battleResult: MutableLiveData<Status<Any>> = MutableLiveData()
+
     val battleResult: LiveData<Status<Any>>
         get() = _battleResult
 
-    private var _transformerList = MutableLiveData<TransformerListDto>()
-    var transformerList: LiveData<TransformerListDto> = _transformerList
-
-    private var _autobotsList = MutableLiveData<TransformerListDto>()
-    var autobotsList: LiveData<TransformerListDto> = _transformerList
-
-    var decepticonsList: LiveData<TransformerListDto> = _transformerList
-
-
+    private var _transformerList = MutableLiveData<Status<TransformerListDto>>()
+    var transformerList: LiveData<Status<TransformerListDto>> = _transformerList
 
 
     fun onTriggerEvent(event: TransformerEvents){
@@ -51,6 +44,8 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
                     is TransformerEvents.CreateTransformer -> createTransformer(event.transformer)  // this will create transformer
                     is TransformerEvents.GetTransformer -> getTransformer()
                     is TransformerEvents.LetBattleTransformer -> getBattleResult(event.autobots,event.decepticons)
+                    is TransformerEvents.UpdateTransformer -> updateTransformer(event.transformer)
+                    is TransformerEvents.RefreshBattle -> _battleResult.postValue(Status.Success(""))
                 }
             }catch (e: Exception){
                 Log.e("TAG", "launchJob: Exception: ${e}, ${e.cause}")
@@ -176,48 +171,50 @@ constructor(private val appRepository: AppRepository, private val appSharedPrefs
         }
     }
 
-    private fun checkForSpecialtransformer() {
-        TODO("Not yet implemented")
-    }
-
-    private fun getDecepticons() {
-//        decepticonsList = transformerList.filter { transformerListDto ->
-//            transformerListDto?.transformer?.all {
-//                it.team.contains("d")
-//            }
-//        }
-    }
-
-    private fun getAutobots() {
-
-//        autobotsList = transformerList.filter { transformerListDto ->
-//            transformerListDto?.transformer?.all {
-//                    it.team.contains("A")
-//            }
-//        }
-
-    }
 
     private suspend fun getTransformer() {
-        _loading.postValue(true)
-        val transformerList = appRepository.getTransformerList(
-            token =  "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}"
-        )
-        Log.e("TAG", "getTransformer: ${transformerList} ")
-
-        _transformerList.postValue(transformerList)
-        _loading.postValue(false)
+        try {
+            _transformerList.postValue(Status.Loading)
+            val transformerList = appRepository.getTransformerList(
+                    token =  "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}"
+            )
+            _transformerList.postValue(Status.Success(transformerList))
+        }catch (ioe: IOException) {
+            _transformerList.postValue(Status.Error(ioe))
+        } catch (he: HttpException) {
+            _transformerList.postValue(Status.Error(he))
+        }
     }
 
     private suspend fun createTransformer(transformer: Transformer) {
         _result.postValue(Status.Loading)
         val result = appRepository.createTransformerAppRepo(
             token =  "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}",
-            contentType = "application/json",
             body = transformer
         )
         _result.postValue(Status.Success(result))
-//        _loading.postValue(false)
+    }
+
+    private suspend fun updateTransformer(transformer: Transformer) {
+        Log.e("TAG", "updateTransformer: ${transformer.id}")
+        _result.postValue(Status.Loading)
+        try {
+             appRepository.deleteTransformerAppRepo(
+                    token = "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}",
+                    id = transformer.id.toString()
+            )
+
+            val result = appRepository.createTransformerAppRepo(
+                    token = "Bearer ${appSharedPrefs.getStoredTag(AppSharedPrefs.tokenPref)}",
+                    body = transformer
+            )
+
+            _result.postValue(Status.Success(result))
+        } catch (ioe: IOException) {
+            _result.postValue(Status.Error(ioe))
+        } catch (he: HttpException) {
+            _result.postValue(Status.Error(he))
+        }
     }
 }
 

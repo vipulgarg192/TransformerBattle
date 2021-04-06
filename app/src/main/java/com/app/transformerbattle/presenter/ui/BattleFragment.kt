@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.app.transformerbattle.databinding.FragmentBattleBinding
 import com.app.transformerbattle.network.model.TransformerDto
+import com.app.transformerbattle.network.model.TransformerListDto
 import com.app.transformerbattle.presenter.adapter.CountryArrayAdapter
 import com.app.transformerbattle.presenter.utils.TransformerEvents
 import com.app.transformerbattle.presenter.viewmodel.MainViewModel
@@ -43,23 +45,39 @@ class BattleFragment: Fragment() {
 
 
     private fun subscribeViewModel() {
-        viewModel.transformerList.observe(viewLifecycleOwner, Observer {
-            autobotsList.addAll(it.transformer?.filter {
-                it.team.contains("A")
-            }!!)
-            decepticonsList.addAll(it.transformer?.filter {
-                it.team.contains("D")
-            }!!)
-
-            spinnerAutoBotsTeamAdapter.notifyDataSetChanged()
-            spinnerDecepticonsTeamAdapter.notifyDataSetChanged()
+        viewModel.onTriggerEvent(TransformerEvents.RefreshBattle)
+        viewModel.transformerList.observe(viewLifecycleOwner, Observer {status->
+            when(status){
+                is Status.Success -> handleSuccess(status.data)
+                is Status.Loading ->  binding.progressbar.visibility = View.VISIBLE
+                is Status.Error -> Toast.makeText(requireContext(),status.exception.message, Toast.LENGTH_LONG).show()
+            }
         })
 
         viewModel.battleResult.observe(viewLifecycleOwner, Observer { status->
             when(status){
-                is Status.Success ->  binding.textResult.text = status.data.toString()
+                is Status.Success ->  handleBattleResult(status.data)
+                is Status.Error -> Toast.makeText(requireContext(),status.exception.message, Toast.LENGTH_LONG).show()
+                is Status.Loading ->  binding.progressbar.visibility = View.VISIBLE
             }
         })
+    }
+
+    private fun handleBattleResult(data: Any) {
+        binding.progressbar.visibility = View.GONE
+        binding.textResult.text = data.toString()
+    }
+
+    private fun handleSuccess(data: TransformerListDto) {
+        autobotsList.addAll(data.transformer?.filter {
+            it.team.contains("A")
+        }!!)
+        decepticonsList.addAll(data.transformer?.filter {
+            it.team.contains("D")
+        }!!)
+
+        spinnerAutoBotsTeamAdapter.notifyDataSetChanged()
+        spinnerDecepticonsTeamAdapter.notifyDataSetChanged()
     }
 
     private fun bindAdapters() {

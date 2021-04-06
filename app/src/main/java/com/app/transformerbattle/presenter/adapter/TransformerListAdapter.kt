@@ -37,7 +37,7 @@ class TransformerListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(arrayList[position])
-        holder.binding.root.setOnClickListener {
+        holder.binding.btnUpdate.setOnClickListener {
             itemClickEventHandler.itemClick(position)
         }
     }

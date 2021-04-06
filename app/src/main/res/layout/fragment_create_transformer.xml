@@ -90,7 +90,7 @@
         android:id="@+id/edit_speed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/strength"
+        android:hint="@string/speed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:maxLines="1"

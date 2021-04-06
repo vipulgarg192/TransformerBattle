@@ -30,12 +30,21 @@
             app:destination="@id/battleFragment"
             app:popUpTo="@id/create_transformer"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_transformerListFragment_to_updateFragment"
+            app:destination="@id/updateFragment"
+            app:popUpTo="@id/create_transformer"
+            app:popUpToInclusive="true"/>
 
     </fragment>
     <fragment
         android:id="@+id/battleFragment"
         android:name="com.app.transformerbattle.presenter.ui.BattleFragment"
         android:label="BattleFragment" />
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.app.transformerbattle.presenter.ui.UpdateFragment"
+        android:label="UpdateFragment" />
 
 
 </navigation>
